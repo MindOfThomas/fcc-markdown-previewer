@@ -8,6 +8,7 @@ html, body {
   height: 100%;
 }
 #TextBox {
+  padding: 0 1em;
   width: 49%;
   display: inline-block;
   float: left;
