@@ -1,0 +1,19 @@
+html, body {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+}
+#app, #app > div, #TextBox, #PreviewBox {
+  height: 100%;
+}
+#TextBox {
+  width: 49%;
+  display: inline-block;
+  float: left;
+}
+#PreviewBox {
+  width: 49%;
+  display: inline-block;
+  float: right;
+}
