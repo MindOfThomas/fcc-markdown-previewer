@@ -6,13 +6,20 @@ const HTMLWebpackPluginConfig = new HTMLWebpackPlugin({
 });
 
 module.exports = {
+  cache: true,
+  debug: true,
   entry: __dirname + '/app/jsx/App.jsx',
   devtool: 'source-map',
   module: {
     loaders: [{
-      test: /\.jsx$/,
-      exclude: /node_modules/,
-      loader: 'babel-loader'
+      test: /\.js[x]?$/,
+      exclude: /node_modules|bower_components/,
+      loader: 'babel-loader?presets[]=es2015&presets[]=react'
+    // }]
+    }, {
+      test: /\.css$/,
+      exclude: /node_modules|bower_components/,
+      loader: 'file'
     }]
   },
   output: {
