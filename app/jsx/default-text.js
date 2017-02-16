@@ -6,6 +6,10 @@ module.exports = `
 
   Write some \`code\`.
 
+  Break things up with a horizontal rule.
+
+  ---
+
   [Make a link](http://example.org)
 
   Add an image
