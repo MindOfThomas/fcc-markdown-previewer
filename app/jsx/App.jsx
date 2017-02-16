@@ -23,7 +23,7 @@ const App = React.createClass({
   },
   render: function() {
     return (
-      <div className='container-fluid'>
+      <div>
         <textarea className='col-xs-12 col-md-6 col-lg-5'
                   id='TextBox'
                   value={this.state.text}
