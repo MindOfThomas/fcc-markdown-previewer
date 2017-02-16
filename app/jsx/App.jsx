@@ -1,7 +1,7 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
 const marked = require('marked');
-let renderer = require('./renderer.js')
+let renderer = require('./renderer.js');
 
 const defaultText = require('./default-text.js');
 
