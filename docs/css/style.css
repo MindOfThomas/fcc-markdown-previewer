@@ -20,3 +20,20 @@ hr {
     height: 1px;
     background-color: #9E9E9E;
 }
+
+div#source-code {
+  text-align: center;
+
+  padding: 2em;
+}
+div#source-code img {
+  width: 25px;
+  height: 25px;
+}
+div#source-code a {
+  color: #01579B;
+  text-decoration: none;
+}
+div#source-code a:hover {
+  text-decoration: underline;
+}
