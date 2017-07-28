@@ -29,12 +29,12 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <textarea className='col-xs-12 col-md-6 col-lg-5'
+        <textarea className='col-xs-12 col-md-6'
                   id='TextBox'
                   value={this.state.text}
                   onChange={this.handleChange}>
         </textarea>
-        <div className='col-xs-12 col-md-6 col-lg-5 col-lg-offset-1 well'
+        <div className='col-xs-12 col-md-6 well'
              id='PreviewBox'
              dangerouslySetInnerHTML={this.state}>
         </div>
