@@ -5,6 +5,9 @@ html, body, .container-fluid {
 #app, #app > div, #Editor, #Preview {
   height: 500px;
 }
+.page-title input[type='text'] {
+  padding: 0.35em;
+}
 #Editor {
   font-family: monospace;
   padding: 0 1em;

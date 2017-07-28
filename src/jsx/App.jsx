@@ -22,6 +22,7 @@ class App extends React.Component {
     this.addPage = this.addPage.bind(this);
     this.getId = this.getId.bind(this);
     this.selectPage = this.selectPage.bind(this);
+    this.renamePage = this.renamePage.bind(this);
   }
   componentDidMount() {
     this.addPage();
@@ -78,6 +79,19 @@ class App extends React.Component {
 
     this.setState({ openPage: pageId });
   }
+  renamePage(pageId, newName) {
+    const page = this.state[this.state.openPage];
+
+    // early-return if newName is same as old name or is blank
+    if (newName.length === 0 || newName === page.title) return;
+
+    const newState = {};
+    newState[pageId] = Object.assign(page, {
+      title: newName,
+    });
+
+    this.setState(newState);
+  }
 
   render() {
     const openPage = this.state[this.state.openPage];
@@ -93,6 +107,7 @@ class App extends React.Component {
           pages={this.state}
           onAdd={this.addPage}
           onSelect={this.selectPage}
+          onRename={this.renamePage}
         />
         <Editor
           text={openPage.text}
