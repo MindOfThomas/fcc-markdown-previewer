@@ -1,27 +1,32 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
 const marked = require('marked');
-let renderer = require('./renderer.js');
+const renderer = require('./renderer.js');
 
 const defaultText = require('./default-text.js');
 
-const App = React.createClass({
-  marked: function(text) {
-    return marked(text, {renderer: renderer});
-  },
-  getInitialState: function() {
-    return {
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
       text: defaultText,
-      __html: this.marked(defaultText)
+      __html: this.marked(defaultText),
     };
-  },
-  handleChange: function(event) {
+
+    this.marked = this.marked.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+  marked(text) {
+    return marked(text, {renderer: renderer});
+  }
+  handleChange(event) {
     this.setState({
       text: event.target.value,
-      __html: this.marked(event.target.value)
+      __html: this.marked(event.target.value),
     });
-  },
-  render: function() {
+  }
+  render() {
     return (
       <div>
         <textarea className='col-xs-12 col-md-6 col-lg-5'
@@ -36,6 +41,6 @@ const App = React.createClass({
       </div>
     );
   }
-});
+}
 
 ReactDOM.render(<App />, document.getElementById('app'));
