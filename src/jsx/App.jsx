@@ -30,12 +30,12 @@ class App extends React.Component {
     return (
       <div>
         <textarea className='col-xs-12 col-md-6'
-                  id='TextBox'
+                  id='Editor'
                   value={this.state.text}
                   onChange={this.handleChange}>
         </textarea>
         <div className='col-xs-12 col-md-6 well'
-             id='PreviewBox'
+             id='Preview'
              dangerouslySetInnerHTML={this.state}>
         </div>
       </div>
