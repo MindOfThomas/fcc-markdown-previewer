@@ -6,6 +6,7 @@ html, body, .container-fluid {
   height: 92%;
 }
 #TextBox {
+  font-family: monospace;
   padding: 0 1em;
   display: inline-block;
   float: left;
@@ -16,9 +17,9 @@ html, body, .container-fluid {
   overflow: auto;
 }
 hr {
-    border: 0;
-    height: 1px;
-    background-color: #9E9E9E;
+  border: 0;
+  height: 1px;
+  background-color: #9E9E9E;
 }
 
 div#source-code {
