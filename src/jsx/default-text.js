@@ -1,22 +1,22 @@
 module.exports = `
-  # Have some Markdown?
-  ## Preview it!
+# Have some Markdown?
+## Preview it!
 
-  Make a **bold** statement. Add some *emphasis* to it.
+Make a **bold** statement. Add some *emphasis* to it.
 
-  Write some \`code\`.
+Write some \`code\`.
 
-  Break things up with a horizontal rule.
+Break things up with a horizontal rule.
 
-  ---
+---
 
-  [Make a link](http://example.org)
+[Make a link](http://example.org)
 
-  Add an image
+Add an image
 
-  ![Give me alt text](https://res.cloudinary.com/du8fiimq1/image/upload/v1487095181/sample.jpg "Give me a title")
+![Give me alt text](https://res.cloudinary.com/du8fiimq1/image/upload/v1487095181/sample.jpg "Give me a title")
 
-  | Make        | A           | Table  |
-  | ----------- |:---------:| -------:|
-  | I'm           | A            | Table  |
+| Make        | A           | Table  |
+| ----------- |:---------:| -------:|
+| I'm           | A            | Table  |
 `;
