@@ -5,6 +5,7 @@ const renderer = require('./renderer');
 
 const defaultText = require('./default-text');
 const Editor = require('./components/Editor');
+const Preview = require('./components/Preview');
 
 class App extends React.Component {
   constructor(props) {
@@ -12,7 +13,9 @@ class App extends React.Component {
 
     this.state = {
       text: defaultText,
-      __html: this.marked(defaultText),
+      html: {
+        __html: this.marked(defaultText),
+      },
     };
 
     this.marked = this.marked.bind(this);
@@ -24,7 +27,9 @@ class App extends React.Component {
   handleChange(event) {
     this.setState({
       text: event.target.value,
-      __html: this.marked(event.target.value),
+      html: {
+        __html: this.marked(event.target.value),
+      },
     });
   }
   render() {
@@ -34,10 +39,9 @@ class App extends React.Component {
           text={this.state.text}
           onChange={this.handleChange}
         />
-        <div className='col-xs-12 col-md-6 well'
-             id='Preview'
-             dangerouslySetInnerHTML={this.state}>
-        </div>
+        <Preview
+          html={this.state.html}
+        />
       </div>
     );
   }
