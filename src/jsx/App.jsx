@@ -4,6 +4,8 @@ const marked = require('marked');
 const renderer = require('./renderer');
 
 const defaultText = require('./default-text');
+
+const PageList = require('./components/PageList');
 const Editor = require('./components/Editor');
 const Preview = require('./components/Preview');
 
@@ -12,35 +14,89 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      text: defaultText,
-      html: {
-        __html: this.marked(defaultText),
-      },
+      openPage: '', // id of current open page
     };
 
     this.marked = this.marked.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.addPage = this.addPage.bind(this);
+    this.getId = this.getId.bind(this);
+    this.selectPage = this.selectPage.bind(this);
   }
+  componentDidMount() {
+    this.addPage();
+  }
+
   marked(text) {
-    return marked(text, {renderer: renderer});
+    return marked(text, { renderer: renderer });
   }
+
   handleChange(event) {
-    this.setState({
+    const page = this.state[this.state.openPage];
+
+    const newState = {};
+    newState[this.state.openPage] = {
+      title: page.title,
       text: event.target.value,
-      html: {
-        __html: this.marked(event.target.value),
-      },
-    });
+      __html: this.marked(event.target.value),
+    };
+
+    this.setState(newState);
   }
+
+  getId() {
+    let id = Math.floor(Math.random() * 100000);
+
+    if (this.state.hasOwnProperty(id)) {
+      // get a different id
+      id = this.getId();
+    }
+
+    return id;
+  }
+
+  addPage() {
+    const pageName = 'Page ' + Object.keys(this.state).length;
+    const pageId = this.getId();
+
+    // change the `openPage` to this new page
+    const newState = {
+      openPage: pageId,
+    };
+    newState[pageId] = {
+      title: pageName,
+      text: defaultText,
+      __html: this.marked(defaultText),
+    };
+
+
+    this.setState(newState);
+  }
+  selectPage(pageId) {
+    this.setState({ openPage: pageId });
+  }
+
   render() {
+    const openPage = this.state[this.state.openPage];
+
+    if (!openPage) {
+      // there are no pages
+      return <div>no pages</div>;
+    }
+
     return (
       <div>
+        <PageList
+          pages={this.state}
+          onAdd={this.addPage}
+          onSelect={this.selectPage}
+        />
         <Editor
-          text={this.state.text}
+          text={openPage.text}
           onChange={this.handleChange}
         />
         <Preview
-          html={this.state.html}
+          html={openPage}
         />
       </div>
     );
