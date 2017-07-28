@@ -45,7 +45,7 @@ class App extends React.Component {
   }
 
   getId() {
-    let id = Math.floor(Math.random() * 100000);
+    let id = 'page' + (Object.keys(this.state).length - 1);
 
     if (this.state.hasOwnProperty(id)) {
       // get a different id
@@ -55,7 +55,7 @@ class App extends React.Component {
     return id;
   }
 
-  addPage() {
+  addPage(event) {
     const pageName = 'Page ' + Object.keys(this.state).length;
     const pageId = this.getId();
 
@@ -73,6 +73,9 @@ class App extends React.Component {
     this.setState(newState);
   }
   selectPage(pageId) {
+    // early-return if page already open
+    if (pageId === this.state.openPage) return;
+
     this.setState({ openPage: pageId });
   }
 

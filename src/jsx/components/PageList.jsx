@@ -8,31 +8,37 @@ class PageList extends React.Component {
 
       if (typeof page !== 'object') continue;
 
+      const pageClass = pageId === this.props.pages.openPage ? 'active' : '';
+
       list.push(
-        <button
+        <li
           key={pageId}
-          type='button'
-          className='btn btn-default'
-          onClick={() => this.props.onSelect(pageId)}
+          className={pageClass}
         >
-          {page.title}
-        </button>
+          <a
+            href='#'
+            onClick={(event) => { this.props.onSelect(pageId); event.preventDefault(); }}
+          >
+            {page.title}
+          </a>
+        </li>
       );
     }
 
     return (
-      <div>
+      <ul className='nav nav-tabs'>
         {list}
 
-        <button
-          type='button'
-          className='btn btn-default'
-          title='Add a page'
-          onClick={this.props.onAdd}
-        >
-          +
-        </button>
-      </div>
+        <li>
+          <a
+            title='Add a page'
+            href='#'
+            onClick={(event) => { this.props.onAdd(); event.preventDefault(); }}
+          >
+            +
+          </a>
+        </li>
+      </ul>
     );
   }
 }
