@@ -1,5 +1,4 @@
-module.exports = `
-# Have some Markdown?
+module.exports = `# Have some Markdown?
 ## Preview it!
 
 Make a **bold** statement. Add some *emphasis* to it.
@@ -18,5 +17,4 @@ Add an image
 
 | Make        | A           | Table |
 |:----------- |:-----------:| -----:|
-| I'm         | A           | Table |
-`;
+| I'm         | A           | Table |`;
