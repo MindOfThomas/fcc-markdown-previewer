@@ -1,9 +1,10 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
 const marked = require('marked');
-const renderer = require('./renderer.js');
+const renderer = require('./renderer');
 
-const defaultText = require('./default-text.js');
+const defaultText = require('./default-text');
+const Editor = require('./components/Editor');
 
 class App extends React.Component {
   constructor(props) {
@@ -29,11 +30,10 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <textarea className='col-xs-12 col-md-6'
-                  id='Editor'
-                  value={this.state.text}
-                  onChange={this.handleChange}>
-        </textarea>
+        <Editor
+          text={this.state.text}
+          onChange={this.handleChange}
+        />
         <div className='col-xs-12 col-md-6 well'
              id='Preview'
              dangerouslySetInnerHTML={this.state}>
