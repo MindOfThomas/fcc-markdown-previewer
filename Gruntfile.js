@@ -7,65 +7,65 @@ module.exports = function(grunt) {
     browserify: {
       dist: {
         options: {
-           transform: [['babelify', {presets: ['es2015', 'react']}]],
-           watch: true,
-           browserifyOptions: {
-             debug: true
-          }
+          transform: [['babelify', {presets: ['es2015', 'react']}]],
+          watch: true,
+          browserifyOptions: {
+            debug: true,
+          },
         },
         src: srcDir + '/jsx/App.jsx',
-        dest: buildDir + '/js/bundle.js'
-      }
+        dest: buildDir + '/js/bundle.js',
+      },
     },
     copy: {
       css: {
         src: srcDir + '/css/style.css',
-        dest: buildDir + '/css/style.css'
+        dest: buildDir + '/css/style.css',
       },
       html: {
         src: srcDir + '/index.html',
-        dest: buildDir + '/index.html'
+        dest: buildDir + '/index.html',
       },
       resources: {
         files: [{
           cwd: srcDir + '/res',
           src: '**/*',
           dest: buildDir + '/res',
-          expand: true
-        }]
-      }
+          expand: true,
+        }],
+      },
     },
     uglify: {
       options: {
         mangle: true,
-        compress: true
+        compress: true,
       },
       target: {
         src: buildDir + '/js/bundle.js',
-        dest: buildDir + '/js/bundle.js'
-      }
+        dest: buildDir + '/js/bundle.js',
+      },
     },
     connect: {
       server: {
         options: {
           port: 8080,
-          base: buildDir
-        }
-      }
+          base: buildDir,
+        },
+      },
     },
     watch: {
       html: {
         files: [srcDir + '/index.html'],
-        tasks: ['copy:html']
+        tasks: ['copy:html'],
       },
       css: {
         files: [srcDir + '/**/*.css'],
         tasks: ['copy:css'],
       },
       options: {
-        spawn: false
-      }
-    }
+        spawn: false,
+      },
+    },
   });
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-contrib-uglify');
