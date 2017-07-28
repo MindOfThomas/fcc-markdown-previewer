@@ -8,9 +8,10 @@ module.exports = function(grunt) {
       dist: {
         options: {
           transform: [['babelify', {presets: ['es2015', 'react']}]],
-          watch: true,
+          watch: process.env.NODE_ENV !== 'production',
           browserifyOptions: {
-            debug: true,
+            debug: process.env.NODE_ENV !== 'production',
+            extensions: ['.jsx']
           },
         },
         src: srcDir + '/jsx/App.jsx',
