@@ -34,7 +34,7 @@ class PageList extends React.Component {
     event.preventDefault();
   }
   handleSelectClick(pageId, event) {
-    if (this.props.pages.openPage === pageId) {
+    if (this.props.openPage === pageId) {
       // clicked on already-selected page, start renaming
       this.setState({
         renaming: true,
@@ -60,7 +60,7 @@ class PageList extends React.Component {
 
       if (typeof page !== 'object') continue;
 
-      const pageClass = pageId === this.props.pages.openPage ? 'active' : '';
+      const pageClass = pageId === this.props.openPage ? 'active' : '';
 
       list.push(
         <li

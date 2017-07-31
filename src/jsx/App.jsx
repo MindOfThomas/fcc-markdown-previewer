@@ -1,7 +1,9 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
 const marked = require('marked');
+
 const renderer = require('./renderer');
+const storage = require('./storage');
 
 const defaultText = require('./default-text');
 
@@ -13,9 +15,16 @@ class App extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      openPage: '', // id of current open page
-    };
+    let state = storage.load();
+    if (!state) {
+      state = {
+        openPage: '', // id of currently open page
+        pages: {},
+      };
+      storage.save(null, state);
+    }
+
+    this.state = state;
 
     this.marked = this.marked.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -25,7 +34,9 @@ class App extends React.Component {
     this.renamePage = this.renamePage.bind(this);
   }
   componentDidMount() {
-    this.addPage();
+    if (Object.keys(this.state.pages).length === 0) {
+      this.addPage();
+    }
   }
 
   marked(text) {
@@ -33,22 +44,25 @@ class App extends React.Component {
   }
 
   handleChange(event) {
-    const page = this.state[this.state.openPage];
+    const pageId = this.state.openPage;
 
-    const newState = {};
-    newState[this.state.openPage] = {
-      title: page.title,
+    const newState = { pages: this.state.pages };
+    const page = {
+      title: this.state.pages[pageId].title,
       text: event.target.value,
       __html: this.marked(event.target.value),
     };
+    newState.pages[pageId] = page;
+
+    storage.save('pages', newState.pages);
 
     this.setState(newState);
   }
 
   getId() {
-    let id = 'page' + (Object.keys(this.state).length - 1);
+    let id = 'page' + Object.keys(this.state.pages).length;
 
-    if (this.state.hasOwnProperty(id)) {
+    if (this.state.pages.hasOwnProperty(id)) {
       // get a different id
       id = this.getId();
     }
@@ -57,19 +71,22 @@ class App extends React.Component {
   }
 
   addPage(event) {
-    const pageName = 'Page ' + Object.keys(this.state).length;
+    const pageName = 'Page ' + Object.keys(this.state.pages).length;
     const pageId = this.getId();
 
     // change the `openPage` to this new page
     const newState = {
       openPage: pageId,
+      pages: this.state.pages,
     };
-    newState[pageId] = {
+    newState.pages[pageId] = {
       title: pageName,
       text: defaultText,
       __html: this.marked(defaultText),
     };
 
+    storage.save('openPage', pageId);
+    storage.save('pages', newState.pages);
 
     this.setState(newState);
   }
@@ -77,24 +94,28 @@ class App extends React.Component {
     // early-return if page already open
     if (pageId === this.state.openPage) return;
 
+    storage.save('openPage', pageId);
+
     this.setState({ openPage: pageId });
   }
   renamePage(pageId, newName) {
-    const page = this.state[this.state.openPage];
+    const page = this.state.pages[this.state.openPage];
 
     // early-return if newName is same as old name or is blank
     if (newName.length === 0 || newName === page.title) return;
 
-    const newState = {};
-    newState[pageId] = Object.assign(page, {
+    const newState = { pages: this.state.pages };
+    newState.pages[pageId] = Object.assign(page, {
       title: newName,
     });
+
+    storage.save('pages', newState.pages);
 
     this.setState(newState);
   }
 
   render() {
-    const openPage = this.state[this.state.openPage];
+    const openPage = this.state.pages[this.state.openPage];
 
     if (!openPage) {
       // there are no pages
@@ -104,7 +125,8 @@ class App extends React.Component {
     return (
       <div>
         <PageList
-          pages={this.state}
+          openPage={this.state.openPage}
+          pages={this.state.pages}
           onAdd={this.addPage}
           onSelect={this.selectPage}
           onRename={this.renamePage}
