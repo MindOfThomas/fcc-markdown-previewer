@@ -117,11 +117,6 @@ class App extends React.Component {
   render() {
     const openPage = this.state.pages[this.state.openPage];
 
-    if (!openPage) {
-      // there are no pages
-      return <div>no pages</div>;
-    }
-
     return (
       <div>
         <PageList
@@ -131,13 +126,20 @@ class App extends React.Component {
           onSelect={this.selectPage}
           onRename={this.renamePage}
         />
-        <Editor
-          text={openPage.text}
-          onChange={this.handleChange}
-        />
-        <Preview
-          html={openPage}
-        />
+        {!openPage &&
+          <div>There aren't any pages.</div>
+        }
+        {openPage &&
+          <div>
+            <Editor
+              text={openPage.text}
+              onChange={this.handleChange}
+            />
+            <Preview
+              html={openPage}
+            />
+          </div>
+        }
       </div>
     );
   }
