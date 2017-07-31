@@ -1,0 +1,41 @@
+html, body, .container-fluid {
+  width: 100%;
+  height: 100%;
+}
+#app, #app > div, #Editor, #Preview {
+  height: 500px;
+}
+.page-title input[type='text'] {
+  padding: 0.35em;
+}
+#Editor {
+  font-family: monospace;
+  padding: 0 1em;
+  display: inline-block;
+}
+#Preview {
+  display: inline-block;
+  overflow: auto;
+}
+hr {
+  border: 0;
+  height: 1px;
+  background-color: #9E9E9E;
+}
+
+div#source-code {
+  text-align: center;
+
+  padding: 2em;
+}
+div#source-code img {
+  width: 25px;
+  height: 25px;
+}
+div#source-code a {
+  color: #01579B;
+  text-decoration: none;
+}
+div#source-code a:hover {
+  text-decoration: underline;
+}

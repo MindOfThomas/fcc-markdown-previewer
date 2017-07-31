@@ -1,6 +1,3 @@
-const srcDir = 'src';
-const buildDir = 'docs'; // for use with GitHub Pages (using 'docs' subfolder option)
-
 'use strict';
 module.exports = function(grunt) {
   grunt.initConfig({
@@ -9,31 +6,14 @@ module.exports = function(grunt) {
         options: {
           transform: [['babelify', {presets: ['es2015', 'react']}]],
           watch: process.env.NODE_ENV !== 'production',
+          keepAlive: process.env.NODE_ENV !== 'production',
           browserifyOptions: {
             debug: process.env.NODE_ENV !== 'production',
             extensions: ['.jsx']
           },
         },
-        src: srcDir + '/jsx/App.jsx',
-        dest: buildDir + '/js/bundle.js',
-      },
-    },
-    copy: {
-      css: {
-        src: srcDir + '/css/style.css',
-        dest: buildDir + '/css/style.css',
-      },
-      html: {
-        src: srcDir + '/index.html',
-        dest: buildDir + '/index.html',
-      },
-      resources: {
-        files: [{
-          cwd: srcDir + '/res',
-          src: '**/*',
-          dest: buildDir + '/res',
-          expand: true,
-        }],
+        src: './src/App.jsx',
+        dest: './dist/bundle.js',
       },
     },
     uglify: {
@@ -42,40 +22,24 @@ module.exports = function(grunt) {
         compress: true,
       },
       target: {
-        src: buildDir + '/js/bundle.js',
-        dest: buildDir + '/js/bundle.js',
+        src: './dist/bundle.js',
+        dest: './dist/bundle.js',
       },
     },
     connect: {
       server: {
         options: {
           port: 8080,
-          base: buildDir,
+          base: './',
         },
-      },
-    },
-    watch: {
-      html: {
-        files: [srcDir + '/index.html'],
-        tasks: ['copy:html'],
-      },
-      css: {
-        files: [srcDir + '/**/*.css'],
-        tasks: ['copy:css'],
-      },
-      options: {
-        spawn: false,
       },
     },
   });
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-contrib-uglify');
 
-  grunt.loadNpmTasks('grunt-contrib-copy');
-
-  grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-connect');
 
-  grunt.registerTask('default', ['browserify', 'uglify', 'copy']);
-  grunt.registerTask('dev', ['connect:server', 'browserify', 'copy', 'watch']);
+  grunt.registerTask('default', ['browserify', 'uglify']);
+  grunt.registerTask('dev', ['connect:server', 'browserify']);
 };
