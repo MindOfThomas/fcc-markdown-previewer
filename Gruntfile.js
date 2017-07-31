@@ -4,7 +4,7 @@ module.exports = function(grunt) {
     browserify: {
       dist: {
         options: {
-          transform: [['babelify', {presets: ['es2015', 'react']}]],
+          transform: [['babelify', {presets: ['babel-preset-es2015', 'babel-preset-react']}]],
           watch: process.env.NODE_ENV !== 'production',
           keepAlive: process.env.NODE_ENV !== 'production',
           browserifyOptions: {
