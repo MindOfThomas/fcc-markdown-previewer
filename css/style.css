@@ -23,6 +23,27 @@ hr {
   background-color: #9E9E9E;
 }
 
+div.delete {
+  height: 18px;
+  width: 18px;
+  border-radius: 100%;
+
+  background-color: #F44336;
+  color: white;
+  text-align: center;
+  line-height: 18px;
+  font-size: 10px;
+
+  position: absolute;
+  top: -9px;
+  left: -9px;
+  z-index: 5;
+
+  cursor: pointer;
+}
+
+/* source code link styles */
+
 div#source-code {
   text-align: center;
 

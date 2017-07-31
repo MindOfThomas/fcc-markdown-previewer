@@ -29,6 +29,7 @@ class App extends React.Component {
     this.marked = this.marked.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.addPage = this.addPage.bind(this);
+    this.deletePage = this.deletePage.bind(this);
     this.getId = this.getId.bind(this);
     this.selectPage = this.selectPage.bind(this);
     this.renamePage = this.renamePage.bind(this);
@@ -70,7 +71,7 @@ class App extends React.Component {
     return id;
   }
 
-  addPage(event) {
+  addPage() {
     const pageName = 'Page ' + Object.keys(this.state.pages).length;
     const pageId = this.getId();
 
@@ -86,6 +87,23 @@ class App extends React.Component {
     };
 
     storage.save('openPage', pageId);
+    storage.save('pages', newState.pages);
+
+    this.setState(newState);
+  }
+  deletePage(pageId) {
+    const pages = this.state.pages;
+    delete pages[pageId];
+
+    const newState = { pages };
+
+    if (this.state.openPage === pageId) {
+      // set the new openPage to first page
+      newState.openPage = Object.keys(this.state.pages)[0];
+
+      storage.save('openPage', newState.openPage);
+    }
+
     storage.save('pages', newState.pages);
 
     this.setState(newState);
@@ -123,6 +141,7 @@ class App extends React.Component {
           openPage={this.state.openPage}
           pages={this.state.pages}
           onAdd={this.addPage}
+          onDelete={this.deletePage}
           onSelect={this.selectPage}
           onRename={this.renamePage}
         />

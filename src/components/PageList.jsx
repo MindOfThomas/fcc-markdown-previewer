@@ -69,7 +69,8 @@ class PageList extends React.Component {
           title={page.title}
           id={pageId}
           className={pageClass}
-          onClick={this.handleSelectClick}
+          onDeleteClick={this.props.onDelete}
+          onTitleClick={this.handleSelectClick}
           onChange={this.handleRenameChange}
           onBlur={this.handleRenameBlur}
           renameState={isRenaming ? this.state.renamingState : null}

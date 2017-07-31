@@ -4,6 +4,24 @@ const PropTypes = require('prop-types');
 const RenameInput = require('./RenameInput');
 
 class PageItem extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      hovering: false,
+    };
+
+    this.handleHover = this.handleHover.bind(this);
+    this.handleHoverOut = this.handleHoverOut.bind(this);
+  }
+
+  handleHover() {
+    this.setState({ hovering: true });
+  }
+  handleHoverOut() {
+    this.setState({ hovering: false });
+  }
+
   render() {
     let titleEl;
     if (!this.props.renaming) {
@@ -23,11 +41,21 @@ class PageItem extends React.Component {
       <li
         key={this.props.id}
         className={this.props.className}
+        onMouseEnter={this.handleHover}
+        onMouseLeave={this.handleHoverOut}
       >
+        {this.state.hovering &&
+          <div
+            className='delete'
+            onClick={() => this.props.onDeleteClick(this.props.id)}
+          >
+            X
+          </div>
+        }
         <a
           className='page-title'
           href='#'
-          onClick={() => this.props.onClick(this.props.id)}
+          onClick={(event) => this.props.onTitleClick(this.props.id, event)}
         >
           {titleEl}
         </a>
@@ -41,7 +69,8 @@ PageItem.propTypes = {
   id: PropTypes.string.isRequired,
   className: PropTypes.string.isRequired,
 
-  onClick: PropTypes.func.isRequired,
+  onDeleteClick: PropTypes.func.isRequired,
+  onTitleClick: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   onBlur: PropTypes.func.isRequired,
 
