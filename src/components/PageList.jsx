@@ -1,5 +1,7 @@
 const React = require('react');
 
+const PageItem = require('./PageItem');
+
 class PageList extends React.Component {
   constructor(props) {
     super(props);
@@ -23,7 +25,6 @@ class PageList extends React.Component {
     });
   }
   handleRenameChange(event) {
-    this._renameInput.size = event.target.value.length;
     this.setState({
       renamingState: event.target.value,
     });
@@ -40,10 +41,6 @@ class PageList extends React.Component {
         renaming: true,
         renamingId: pageId,
         renamingState: this.props.pages[pageId].title,
-      }, () => {
-        this._renameInput.size = this.state.renamingState.length;
-        this._renameInput.focus();
-        this._renameInput.setSelectionRange(0, this._renameInput.value.length);
       });
 
       return;
@@ -60,33 +57,23 @@ class PageList extends React.Component {
 
       if (typeof page !== 'object') continue;
 
-      const pageClass = pageId === this.props.openPage ? 'active' : '';
+      const isRenaming = this.state.renaming && pageId === this.state.renamingId;
+      const isOpen = pageId === this.props.openPage;
+
+      const pageClass = isOpen ? 'active' : '';
 
       list.push(
-        <li
+        <PageItem
           key={pageId}
+          renaming={isRenaming}
+          title={page.title}
+          id={pageId}
           className={pageClass}
-        >
-          <a
-            className='page-title'
-            href='#'
-            onClick={this.handleSelectClick.bind(this, pageId)}
-          >
-            {!this.state.renaming &&
-              page.title
-            }
-
-            {this.state.renaming && this.state.renamingId === pageId &&
-              <input
-                type='text'
-                onChange={this.handleRenameChange}
-                onBlur={this.handleRenameBlur}
-                value={this.state.renamingState}
-                ref={(input) => { this._renameInput = input; }}
-              />
-            }
-          </a>
-        </li>
+          onClick={this.handleSelectClick}
+          onChange={this.handleRenameChange}
+          onBlur={this.handleRenameBlur}
+          renameState={isRenaming ? this.state.renamingState : null}
+        />
       );
     }
 
